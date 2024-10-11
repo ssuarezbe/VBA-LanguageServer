@@ -1,122 +1,123 @@
 {
-	"name": "vba-lsp",
-	"type": "module",
-	"displayName": "VBA Pro",
-	"description": "A VBA extension for VSCode with Language Server support",
-	"icon": "images/vba-lsp-icon.png",
-	"author": "SSlinky",
-	"license": "MIT",
-	"version": "1.4.4",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/SSlinky/VBA-LanguageServer"
-	},
-	"publisher": "NotisDataAnalytics",
-	"categories": [
-		"Programming Languages",
-		"Snippets",
-		"Linters",
-		"Formatters"
-	],
-	"keywords": [
-		"multi-root ready"
-	],
-	"engines": {
-		"vscode": "^1.63.0"
-	},
-	"main": "./client/out/extension",
-	"activationEvents": [],
-	"contributes": {
-		"languages": [
-			{
-				"id": "vba",
-				"aliases": [
-					"VBA"
-				],
-				"extensions": [
-					".bas",
-					".cls",
-					".frm"
-				],
-				"configuration": "./vba.language-configuration.json"
-			}
-		],
-		"configurationDefaults": {
-			"[vba]": {
-				"editor.semanticHighlighting.enabled": true
-			}
-		},
-		"configuration": {
-			"type": "object",
-			"title": "VBA Pro",
-			"properties": {
-				"vbaLanguageServer.maxDocumentLines": {
-					"scope": "resource",
-					"type": "number",
-					"default": 1000,
-					"description": "Limits the file size the language server will attempt to parse."
-				},
-				"vbaLanguageServer.maxNumberOfProblems": {
-					"scope": "resource",
-					"type": "number",
-					"default": 100,
-					"description": "Controls the maximum number of problems produced by the server."
-				},
-				"vbaLanguageServer.doWarnOptionExplicitMissing": {
-					"scope": "resource",
-					"type": "boolean",
-					"default": true,
-					"description": "The language server should warn when Option Explicit is not present."
-				},
-				"vbaLanguageServer.trace.server": {
-					"scope": "window",
-					"type": "string",
-					"enum": [
-						"off",
-						"messages",
-						"verbose"
-					],
-					"default": "verbose",
-					"description": "Traces the communication between VS Code and the language server."
-				}
-			}
-		},
-		"grammars": [
-			{
-				"language": "vba",
-				"scopeName": "source.vba",
-				"path": "./client/out/vba.tmLanguage.json"
-			}
-		],
-		"snippets": [
-			{
-				"language": "vba",
-				"path": "./snippets/vba.json"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run antlr4ng && npm run compile",
-		"compile": "tsc -b",
-		"watch": "tsc -b -w",
-		"lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
-		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-		"test": "sh ./scripts/e2e.sh",
-		"textMate": "npx js-yaml client/src/syntaxes/vba.tmLanguage.yaml > client/out/vba.tmLanguage.json",
-		"antlr4ng": "antlr4ng -Dlanguage=TypeScript -visitor ./server/src/antlr/vba.g4 -o ./server/src/antlr/out/"
-	},
-	"dependencies": {
-		"antlr4ng": "^3.0.7"
-	},
-	"devDependencies": {
-		"@types/mocha": "^10.0.9",
-		"@types/node": "^22.7.5",
-		"@typescript-eslint/eslint-plugin": "^8.8.1",
-		"@typescript-eslint/parser": "^8.8.1",
-		"antlr4ng-cli": "^2.0.0",
-		"eslint": "^9.12.0",
-		"js-yaml": "^4.1.0",
-		"mocha": "^10.7.3",
-		"typescript": "^5.6.3"
-	}
+  "name": "vba-lsp",
+  "type": "module",
+  "displayName": "VBA Pro",
+  "description": "A VBA extension for VSCode with Language Server support",
+  "icon": "images/vba-lsp-icon.png",
+  "author": "SSlinky",
+  "license": "MIT",
+  "version": "1.4.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SSlinky/VBA-LanguageServer"
+  },
+  "publisher": "NotisDataAnalytics",
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Formatters"
+  ],
+  "keywords": [
+    "multi-root ready"
+  ],
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "main": "./server/out/server",
+  "activationEvents": [],
+  "contributes": {
+    "languages": [
+      {
+        "id": "vba",
+        "aliases": [
+          "VBA"
+        ],
+        "extensions": [
+          ".bas",
+          ".cls",
+          ".frm"
+        ],
+        "configuration": "./vba.language-configuration.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[vba]": {
+        "editor.semanticHighlighting.enabled": true
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "title": "VBA Pro",
+      "properties": {
+        "vbaLanguageServer.maxDocumentLines": {
+          "scope": "resource",
+          "type": "number",
+          "default": 1000,
+          "description": "Limits the file size the language server will attempt to parse."
+        },
+        "vbaLanguageServer.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "vbaLanguageServer.doWarnOptionExplicitMissing": {
+          "scope": "resource",
+          "type": "boolean",
+          "default": true,
+          "description": "The language server should warn when Option Explicit is not present."
+        },
+        "vbaLanguageServer.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "verbose",
+          "description": "Traces the communication between VS Code and the language server."
+        }
+      }
+    },
+    "grammars": [
+      {
+        "language": "vba",
+        "scopeName": "source.vba",
+        "path": "./client/out/vba.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "vba",
+        "path": "./snippets/vba.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run antlr4ng && npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "lint": "eslint  ./server/src --ext .ts,.tsx",
+    "postinstall": "cd server && npm install && cd ..",
+    "test": "sh ./scripts/e2e.sh",
+    "textMate": "npx js-yaml client/src/syntaxes/vba.tmLanguage.yaml > client/out/vba.tmLanguage.json",
+    "antlr4ng": "antlr4ng -Dlanguage=TypeScript -visitor ./server/src/antlr/vba.g4 -o ./server/src/antlr/out/"
+  },
+  "dependencies": {
+    "antlr4": "^4.13.2",
+    "antlr4ng": "^3.0.7"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "antlr4ng-cli": "^2.0.0",
+    "eslint": "^9.12.0",
+    "js-yaml": "^4.1.0",
+    "mocha": "^10.7.3",
+    "typescript": "^5.6.3"
+  }
 }

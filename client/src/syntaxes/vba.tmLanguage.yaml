@@ -12,15 +12,15 @@ repository:
   fileStructure:
     patterns:
       - include: "#moduleHeader"
-      - include: "#comments"        # Handle comments here so they aren't broken by other stuff.
-      - include: "#strings"         # Handle strings here so they aren't broken by other stuff.
-      - include: "#labels"          # Handle labels first so they aren't handled by lines.
-      - include: "#inlineMethod"    # Try not to be too sad people can, and do, do this.
+      - include: "#comments" # Handle comments here so they aren't broken by other stuff.
+      - include: "#strings" # Handle strings here so they aren't broken by other stuff.
+      - include: "#labels" # Handle labels first so they aren't handled by lines.
+      - include: "#inlineMethod" # Try not to be too sad people can, and do, do this.
       - include: "#methodSignature"
-      - include: "#continuations"   # Consume continuations so they "continue" other matches.
+      - include: "#continuations" # Consume continuations so they "continue" other matches.
       - include: "#enum"
       - include: "#struct"
-      - include: "#syntaxLines"     # Split document lines into syntax lines.
+      - include: "#syntaxLines" # Split document lines into syntax lines.
 
   continuations:
     name: meta.has-continuation.vba
@@ -59,7 +59,6 @@ repository:
       - include: "#variableDeclarations"
       - include: "#block"
 
-
   language:
     name: source.language.vba
     patterns:
@@ -72,7 +71,6 @@ repository:
       - include: "#objectModel"
       - include: "#subCall"
 
-      
   literals:
     patterns:
       - include: "#comments"
@@ -170,7 +168,7 @@ repository:
                   - include: "#functionCall"
               3:
                 name: keyword.control.flow.loop.vba
-          
+
           inlineIfElse:
             name: meta.flow.inline-if-else.vba
             match: (?i)\s*((?:else)?if)\s+(.*?)\s+(then)\s+(.*)\s+(else)\s+([^'\n]*)
@@ -193,7 +191,7 @@ repository:
                 patterns:
                   - include: "#expression"
                   - include: "#functionCall"
-          
+
           inlineIf:
             name: meta.flow.inline-if.vba
             match: (?i)\s*((?:else)?if)\s+(.*?)\s+(then)
@@ -214,7 +212,7 @@ repository:
           flowPauseExit:
             name: keyword.control.flow.other.vba
             match: "(?i)\\b(doevents|end(?! property)|exit\\s+sub|exit\\s+function|exit\\s+property|stop)\\b"
-            
+
           flowBranch:
             patterns:
               - include: "#flowBranchOnGos"
@@ -258,7 +256,7 @@ repository:
           directiveIf:
             name: keyword.directive.vba
             match: "(?i)^(#if|#then|#elseif|#else)\\b"
-            
+
           directiveConst:
             match: "(?i)^\\s*(#const)\\s+([a-z][a-z0-9_]*)(\\s+=.*)"
             captures:
@@ -269,7 +267,7 @@ repository:
               3:
                 patterns:
                   - include: "#language"
-          
+
           directiveIllegal:
             name: invalid.illegal.vba
             match: "^#.*"
@@ -311,7 +309,7 @@ repository:
                 name: entity.name.type.vba
               3:
                 name: entity.name.function.vba
-                
+
           objectModelApplicationProperties:
             match: "(?i)\\b(application)(\\.(ActiveCell|ActiveChart|ActiveEncryptionSession|ActivePrinter|ActiveProtectedViewWindow|ActiveSheet|ActiveWindow|ActiveWorkbook|AddIns|AddIns2|AlertBeforeOverwriting|AltStartupPath|AlwaysUseClearType|Application|ArbitraryXMLSupportAvailable|AskToUpdateLinks|Assistance|AutoCorrect|AutoFormatAsYouTypeReplaceHyperlinks|AutomationSecurity|AutoPercentEntry|AutoRecover|Build|CalculateBeforeSave|Calculation|CalculationInterruptKey|CalculationState|CalculationVersion|Caller|CanPlaySounds|CanRecordSounds|Caption|CellDragAndDrop|Cells|ChartDataPointTrack|Charts|ClipboardFormats|ClusterConnector|Columns|COMAddIns|CommandBars|CommandUnderlines|ConstrainNumeric|ControlCharacters|CopyObjectsWithCells|Creator|Cursor|CursorMovement|CustomListCount|CutCopyMode|DataEntryMode|DDEAppReturnCode|DecimalSeparator|DefaultFilePath|DefaultSaveFormat|DefaultSheetDirection|DefaultWebOptions|DeferAsyncQueries|Dialogs|DisplayAlerts|DisplayClipboardWindow|DisplayCommentIndicator|DisplayDocumentActionTaskPane|DisplayDocumentInformationPanel|DisplayExcel4Menus|DisplayFormulaAutoComplete|DisplayFormulaBar|DisplayFullScreen|DisplayFunctionToolTips|DisplayInsertOptions|DisplayNoteIndicator|DisplayPasteOptions|DisplayRecentFiles|DisplayScrollBars|DisplayStatusBar|EditDirectlyInCell|EnableAnimations|EnableAutoComplete|EnableCancelKey|EnableCheckFileExtensions|EnableEvents|EnableLargeOperationAlert|EnableLivePreview|EnableMacroAnimations|EnableSound|ErrorCheckingOptions|Excel4IntlMacroSheets|Excel4MacroSheets|ExtendList|FeatureInstall|FileConverters|FileDialog|FileExportConverters|FileValidation|FileValidationPivot|FindFormat|FixedDecimal|FixedDecimalPlaces|FlashFill|FlashFillMode|FormulaBarHeight|GenerateGetPivotData|GenerateTableRefs|Height|HighQualityModeForGraphics|Hinstance|HinstancePtr|Hwnd|IgnoreRemoteRequests|Interactive|International|IsSandboxed|Iteration|LanguageSettings|LargeOperationCellThousandCount|Left|LibraryPath|MailSession|MailSystem|MapPaperSize|MathCoprocessorAvailable|MaxChange|MaxIterations|MeasurementUnit|MergeInstances|MouseAvailable|MoveAfterReturn|MoveAfterReturnDirection|MultiThreadedCalculation|Name|Names|NetworkTemplatesPath|NewWorkbook|ODBCErrors|ODBCTimeout|OLEDBErrors|OnWindow|OperatingSystem|OrganizationName|Parent|Path|PathSeparator|PivotTableSelection|PreviousSelections|PrintCommunication|ProductCode|PromptForSummaryInfo|ProtectedViewWindows|QuickAnalysis|Range|Ready|RecentFiles|RecordRelative|ReferenceStyle|RegisteredFunctions|ReplaceFormat|RollZoom|Rows|RTD|ScreenUpdating|Selection|SensitivityLabelPolicy|Sheets|SheetsInNewWorkbook|ShowChartTipNames|ShowChartTipValues|ShowDevTools|ShowMenuFloaties|ShowQuickAnalysis|ShowSelectionFloaties|ShowStartupDialog|ShowToolTips|SmartArtColors|SmartArtLayouts|SmartArtQuickStyles|Speech|SpellingOptions|StandardFont|StandardFontSize|StartupPath|StatusBar|TemplatesPath|ThisCell|ThisWorkbook|ThousandsSeparator|Top|TransitionMenuKey|TransitionMenuKeyAction|TransitionNavigKeys|UsableHeight|UsableWidth|UseClusterConnector|UsedObjects|UserControl|UserLibraryPath|UserName|UseSystemSeparators|Value|VBE|Version|Visible|WarnOnFunctionNameConflict|Watches|Width|Windows|WindowsForPens|WindowState|Workbooks|WorksheetFunction|Worksheets)\\b)"
             captures:
@@ -487,7 +485,7 @@ repository:
       2:
         patterns:
           - include: "#comments"
-  
+
   enumMember:
     match: (?i)^\s*([a-z][a-z0-9_]*)(?:\s+(=)\s+([^\n']*))?(\s+(?:'|Rem).*)?
     captures:
@@ -592,8 +590,6 @@ repository:
       6: # End method
         name: storage.type.method.close.vba
 
-
-
   methodSignature:
     name: source.method.signature.vba
     begin: (?i)^\s*((?:Public|Private)?\b\s*(?:(?:Sub|Function)|Property\s+(?:Let|Get|Set)))\s+([a-z][a-z0-9_]*)\s*(\()
@@ -613,7 +609,7 @@ repository:
           - include: "#types"
     patterns:
       - include: "#arguments"
-    
+
   methodClose:
     name: storage.type.method.close.vba
     match: (?i)^\s*End\s+(Sub|Function|Property)
@@ -628,14 +624,14 @@ repository:
     # This match just made up of the operators matchs. Don't look at it too hard.
     match: (?i)(.*?)\s+((?:[*&\/\+-]|\bMod\b)|(?:[<>=]|\b(is|like)\b)|(?:[&+])|(?:\b(and|eqv|imp|not|or|xor)\b)|(?:\b(addressof|typeof)\b))\s+(.*)
     captures:
-      1:  # Left sided of expression
+      1: # Left sided of expression
         patterns:
           - include: "#functionCall"
           - include: "#literal"
-      2:  # Operator
+      2: # Operator
         patterns:
           - include: "#operators"
-      3:  # Operator
+      3: # Operator
         patterns:
           - include: "#literals"
           - include: "#functionCall"
