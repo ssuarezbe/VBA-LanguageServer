@@ -1,18 +1,24 @@
 import { MessageReader, MessageWriter } from "vscode-jsonrpc";
 import * as ws from "ws";
 import * as express from "express";
-import * as rpc from "vscode-ws-jsonrpc";
 import { LanguageServer } from "./server";
 import * as http from "http";
 import * as url from "url";
 import * as net from "net";
+import { MessageConnection, NotificationType } from "vscode-jsonrpc";
+import {
+  listen,
+  WebSocketMessageReader,
+  WebSocketMessageWriter,
+  IWebSocket,
+} from "vscode-ws-jsonrpc";
 
-function launch(socket: rpc.IWebSocket) {
+function launch(socket: IWebSocket) {
   /*
   https://github.com/railsware/upterm/blob/1d04bcb6d5aec8f62e4025ddee4a77db8cc12c52/src/language-server/ShellLanguageServer.ts#L27
   */
-  const reader = new rpc.WebSocketMessageReader(socket);
-  const writer = new rpc.WebSocketMessageWriter(socket);
+  const reader = new WebSocketMessageReader(socket);
+  const writer = new WebSocketMessageWriter(socket);
   const languageServer = new LanguageServer(reader, writer);
 }
 process.on("uncaughtException", function (err: any) {
@@ -40,7 +46,7 @@ server.on(
     const pathname = request.url ? url.parse(request.url).pathname : undefined;
     if (pathname === "//sampleServer") {
       wss.handleUpgrade(request, socket, head, (webSocket) => {
-        const socket: rpc.IWebSocket = {
+        const socket: IWebSocket = {
           send: (content) =>
             webSocket.send(content, (error) => {
               if (error) {
