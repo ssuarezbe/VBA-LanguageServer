@@ -112,6 +112,7 @@
     "antlr4ng": "^3.0.7",
     "express": "^4.21.1",
     "fix-esm": "^1.0.1",
+    "tsimportlib": "^0.0.5",
     "vscode-ws-jsonrpc": "^3.3.2",
     "ws": "^8.18.0"
   },

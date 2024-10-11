@@ -1,6 +1,6 @@
 import { MessageReader, MessageWriter } from "vscode-jsonrpc";
 import * as ws from "ws";
-import * as express from "express";
+import express from "express";
 import { LanguageServer } from "./server";
 import * as http from "http";
 import * as url from "url";
