@@ -12,6 +12,8 @@ import {
   WebSocketMessageWriter,
   IWebSocket,
 } from "vscode-ws-jsonrpc";
+// breaking changes
+// https://github.com/TypeFox/monaco-languageclient/blob/main/packages/vscode-ws-jsonrpc/CHANGELOG.md#200---2022-09-08
 
 function launch(socket: IWebSocket) {
   /*
