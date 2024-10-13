@@ -11,7 +11,7 @@ import {
   WebSocketMessageReader,
   WebSocketMessageWriter,
   IWebSocket,
-} from "vscode-ws-jsonrpc";
+} from "./vscode-ws-jsonrpc";
 // breaking changes
 // https://github.com/TypeFox/monaco-languageclient/blob/main/packages/vscode-ws-jsonrpc/CHANGELOG.md#200---2022-09-08
 
@@ -19,6 +19,7 @@ function launch(socket: IWebSocket) {
   /*
   https://github.com/railsware/upterm/blob/1d04bcb6d5aec8f62e4025ddee4a77db8cc12c52/src/language-server/ShellLanguageServer.ts#L27
   */
+  console.log("RPC server launched.....");
   const reader = new WebSocketMessageReader(socket);
   const writer = new WebSocketMessageWriter(socket);
   const languageServer = new LanguageServer(reader, writer);
@@ -36,6 +37,7 @@ const app = express();
 app.use(express.static(__dirname));
 // start the server
 const server = app.listen(3000, "localhost");
+console.log("Server start ......");
 // create the web socket
 const wss = new ws.Server({
   noServer: true,
