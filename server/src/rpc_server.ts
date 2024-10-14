@@ -75,3 +75,4 @@ server.on(
     }
   },
 );
+console.log("WebSocket server is running...");
