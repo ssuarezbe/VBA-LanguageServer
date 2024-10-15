@@ -44,11 +44,14 @@ const wss = new ws.Server({
   perMessageDeflate: false,
 });
 //
+const handshake_path: string = "/vbaLspSampleServer";
+
 server.on(
   "upgrade",
   (request: http.IncomingMessage, socket: net.Socket, head: Buffer) => {
     const pathname = request.url ? url.parse(request.url).pathname : undefined;
-    if (pathname === "//sampleServer") {
+    console.log("pathname=" + pathname);
+    if (pathname === handshake_path) {
       wss.handleUpgrade(request, socket, head, (webSocket) => {
         const socket: IWebSocket = {
           send: (content) =>
