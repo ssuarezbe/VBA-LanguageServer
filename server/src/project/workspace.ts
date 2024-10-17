@@ -42,6 +42,8 @@ export class Workspace {
   readonly connection: _Connection;
 
   get activeDocument() {
+    console.log("Does have active document ? Method='capabilities'");
+    //console.log(JSON.stringify(this._activeDocument));
     return this._activeDocument;
   }
 
@@ -58,16 +60,22 @@ export class Workspace {
       connection: params.connection,
       configuration: params.capabilities,
     });
+    console.log("Checking constructor of Class Workspace .....");
   }
 
   activateDocument(document?: BaseProjectDocument) {
+    console.log("Calling activateDocument");
+    //console.log(JSON.stringify(document));
     if (document) {
       this._activeDocument = document;
     }
   }
 
   async parseActiveDocument(document?: BaseProjectDocument) {
+    console.log("Calling parseActiveDocument..");
+    console.log(document);
     this.activateDocument(document);
+    console.log("Document activated !!!");
     this._parseCancellationTokenSource?.cancel();
     this._parseCancellationTokenSource = new CancellationTokenSource();
 
@@ -135,7 +143,11 @@ class WorkspaceEvents {
     this._configuration = params.configuration;
     this._documents = new TextDocuments(TextDocument);
     this.initialiseConnectionEvents(params.connection);
+    console.log("building workspace events");
     this._initialiseDocumentsEvents();
+    console.log("Used by ");
+    console.log("params.connection this._documents.listen");
+    //console.log(JSON.stringify(params.connection));
     this._documents.listen(params.connection);
   }
 
@@ -154,6 +166,9 @@ class WorkspaceEvents {
 
     // Sleep between attempting to grab the document.
     // Loop while we have undefined or an earlier version.
+    console.log("activeParsedDocument()......");
+    console.log(`version=${version}`);
+    console.log(document);
     while (!document || document.textDocument.version < version) {
       if (token.isCancellationRequested) {
         return;
@@ -161,6 +176,8 @@ class WorkspaceEvents {
       await sleep(5);
       document = this._activeDocument;
     }
+
+    console.log("While passed !!");
 
     // Return if the version somehow outpaced us.
     if (version > 0 && document.textDocument.version != version) {
@@ -199,7 +216,17 @@ class WorkspaceEvents {
     }
 
     connection.onRequest((method: string, params: object | object[] | any) => {
+      console.log(`connection.onRequest ${method}`);
+      console.log(params);
+      /* Manual redirect. There is BUG an the server is uncapable of detecting
+      - textDocument/didChange
+      - textDocument/didClose
+      - textDocument/didOpen
+      */
       switch (method) {
+        case "textDocument/didOpen": {
+          return this._onDidOpenTextDocumentAsync(params);
+        }
         case "textDocument/semanticTokens/full": {
           return this._activeDocument?.languageServerSemanticTokens();
         }
@@ -213,9 +240,11 @@ class WorkspaceEvents {
           console.error(`Unresolved request path: ${method}`);
       }
     });
+    console.log("initialiseConnectionEvents DONE !");
   }
 
   private _initialiseDocumentsEvents() {
+    console.log("Calling _initialiseDocumentsEvents");
     this._documents.onDidChangeContent(
       async (e) => await this.onDidChangeContentAsync(e.document),
     );
@@ -251,7 +280,7 @@ class WorkspaceEvents {
     console.log(`token=${JSON.stringify(token)}`);
     const document = await this.activeParsedDocument(0, token);
     console.log("Document parsing finished !");
-    console.log(`document=${JSON.stringify(document)}`);
+    //console.log(`document=${JSON.stringify(document)}`);
     return document?.languageServerSymbolInformation() ?? [];
   }
 
@@ -296,6 +325,7 @@ class WorkspaceEvents {
    * @param doc The document that changed.
    */
   async _onDidOpenTextDocumentAsync(params: DidOpenTextDocumentParams) {
+    console.log("Calling _onDidOpenTextDocumentAsync");
     await this._handleChangeOrOpenAsync(
       TextDocument.create(
         params.textDocument.uri,
@@ -311,10 +341,14 @@ class WorkspaceEvents {
   }
 
   protected async _handleChangeOrOpenAsync(document: TextDocument) {
+    console.log("Calling _handleChangeOrOpenAsync");
+    //console.log(JSON.stringify(document));
     this._activeDocument = BaseProjectDocument.create(
       this._workspace,
       document,
     );
+    console.log("Creating this._activeDocument ...");
+    console.log(this._activeDocument);
     await this._workspace.parseActiveDocument(this._activeDocument);
   }
 }
